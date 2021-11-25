@@ -6,7 +6,7 @@ async function getPersons(req, res) {
 
         if (!person) {
             res.writeHead(400, { 'Content-Type': 'application/json'});
-            res.end(JSON.stringify('message not found'));
+            res.end(JSON.stringify('message: not found'));
         } else {
             res.writeHead(200, { 'Content-Type': 'application/json'});
             res.end(JSON.stringify(person));
