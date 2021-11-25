@@ -1,0 +1,17 @@
+[
+    {
+        "id": 1,
+        "name": "Jayson",
+        "hobbies": "tennis"
+    },
+    {
+        "id": 2,
+        "name": "Tom",
+        "hobbies": "fortinte"
+    },
+    {
+        "id": 3,
+        "name": "Shaxx",
+        "hobbies": "football"
+    }
+]
