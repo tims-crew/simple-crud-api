@@ -1,0 +1,31 @@
+{
+  "name": "simple-crud-api",
+  "version": "1.0.0",
+  "description": "Simple CRUD API (RS School project)",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "start:prod": "webpack --config production.webpack.cjs && node  -r dotenv/config dist/server.cjs dotenv_config_path=./.env.production",
+    "start:dev": "nodemon  -r  dotenv/config  server.js dotenv_config_path=./.env.development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tims-crew/simple-crud-api.git"
+  },
+  "author": "tims-crew",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tims-crew/simple-crud-api/issues"
+  },
+  "homepage": "https://github.com/tims-crew/simple-crud-api#readme",
+  "devDependencies": {
+    "dotenv-webpack": "^7.0.3",
+    "nodemon": "^2.0.15",
+    "webpack": "^5.64.4",
+    "webpack-cli": "^4.9.1"
+  },
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "uuid": "^8.3.2"
+  }
+}
