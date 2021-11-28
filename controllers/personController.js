@@ -103,7 +103,7 @@ async function updatePerson(res, req, id) {
 
 //@desc Removes person by ID
 //@route DELETE /api/person/:id
-async function deletePerson(req, res, id) {
+async function deletePerson(res, req, id) {
     try {
         const person = await Person.findById(id);
 

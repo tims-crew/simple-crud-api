@@ -38,7 +38,7 @@ function remove(id) {
     return new Promise((resolve, reject) => {
         persons = persons.filter((p) => p.id !== id);
         writeDataToFile('./person.json', persons);
-        resolve();
+        resolve(persons);
     });
 }
 
