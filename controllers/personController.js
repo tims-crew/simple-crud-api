@@ -40,6 +40,8 @@ async function getPerson(req, res, id) {
     }
 }
 
+//@desc Create person
+//@route POST /api/person/
 async function createPerson(res, req) {
     try { 
         const body = await getPostData(req);
@@ -68,27 +70,30 @@ async function createPerson(res, req) {
     }
 }
 
+//@desc Updates person by ID
+//@route PUT/PATCH /api/person/:id
 async function updatePerson(res, req, id) {
     try { 
         const body = await getPostData(req);
+        const person = await Person.findById(id);
 
         if (!body || body === {}) {
             console.log(body);
 
             res.writeHead(400, { 'Content-Type': 'plain/text' });
-            res.end('Please, write something before updating!!!');
+            res.end('Please, write something before update!!!');
         } else {
             const { name, age, hobbies } = JSON.parse(body);
 
             const product = {
-                name: name,
-                age: age,
-                hobbies: hobbies
+                name: name || person.name,
+                age: age || person.age,
+                hobbies: hobbies || person.hobbies
             };
     
             const updPersons = await Person.update(product, id);
     
-            res.writeHead(201, { 'Content-Type': 'application/json'});
+            res.writeHead(201, { 'Content-Type': 'application/json' });
             return res.end(JSON.stringify(updPersons));
         }
     } catch(e) {
@@ -96,9 +101,29 @@ async function updatePerson(res, req, id) {
     }
 }
 
+//@desc Removes person by ID
+//@route DELETE /api/person/:id
+async function deletePerson(req, res, id) {
+    try {
+        const product = await Person.findById(id)
+
+        if(!product) {
+            res.writeHead(404, { 'Content-Type': 'application/json' })
+            res.end(JSON.stringify({ message: 'Product Not Found' }))
+        } else {
+            await Person.remove(id);
+            res.writeHead(200, { 'Content-Type': 'application/json' })
+            res.end(JSON.stringify({ message: `Person with id: ${id} removed` }))
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 module.exports = {
     getPersons,
     getPerson,
     createPerson,
-    updatePerson
+    updatePerson,
+    deletePerson
 };
