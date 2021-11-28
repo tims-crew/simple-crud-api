@@ -29,7 +29,7 @@ async function getPerson(req, res, id) {
 
         if (!person) {
             res.writeHead(400, { 'Content-Type': 'application/json'});
-            res.end(JSON.stringify('message not found'));
+            res.end(JSON.stringify({ 'message': 'person not found' }));
         } else {
             res.writeHead(200, { 'Content-Type': 'application/json'});
             res.end(JSON.stringify(person));
@@ -46,7 +46,7 @@ async function createPerson(res, req) {
     try { 
         const body = await getPostData(req);
 
-        if (!body || body === {}) {
+        if (!body) {
             console.log(body);
 
             res.writeHead(400, { 'Content-Type': 'plain/text' });
@@ -57,7 +57,7 @@ async function createPerson(res, req) {
             const product = {
                 name,
                 age,
-                hobbies
+                hobbies: new Array(hobbies)
             };
     
             const newProduct = await Person.create(product);
@@ -77,7 +77,7 @@ async function updatePerson(res, req, id) {
         const body = await getPostData(req);
         const person = await Person.findById(id);
 
-        if (!body || body === {}) {
+        if (!body) {
             console.log(body);
 
             res.writeHead(400, { 'Content-Type': 'plain/text' });
@@ -105,18 +105,18 @@ async function updatePerson(res, req, id) {
 //@route DELETE /api/person/:id
 async function deletePerson(req, res, id) {
     try {
-        const product = await Person.findById(id)
+        const person = await Person.findById(id);
 
-        if(!product) {
-            res.writeHead(404, { 'Content-Type': 'application/json' })
-            res.end(JSON.stringify({ message: 'Product Not Found' }))
+        if(!person) {
+            res.writeHead(404, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ message: 'Person Not Found' }));
         } else {
             await Person.remove(id);
-            res.writeHead(200, { 'Content-Type': 'application/json' })
-            res.end(JSON.stringify({ message: `Person with id: ${id} removed` }))
+            res.writeHead(204, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ message: `Person with id: ${id} removed` }));
         }
     } catch (error) {
-        console.log(error)
+        console.log(error);
     }
 }
 

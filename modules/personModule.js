@@ -16,19 +16,19 @@ function findById(id) {
     });
 }
 
-function create(product) {
+function create(person) {
     return new Promise((resolve, reject) => {
-        const newProduct = {id: uuidv4(), ...product};
-        persons.push(newProduct);
+        const newPerson = {id: uuidv4(), ...person};
+        persons.push(newPerson);
         writeDataToFile('./person.json', persons);
-        resolve(newProduct);
+        resolve(newPerson);
     });
 }
 
-function update(product, id) {
+function update(person, id) {
     return new Promise((resolve, reject) => {
         const index = persons.findIndex(p => p.id === id);
-        persons[index] = {id, ...product};
+        persons[index] = {id, ...person};
         writeDataToFile('./person.json', persons);
         resolve(persons[index]);
     });
