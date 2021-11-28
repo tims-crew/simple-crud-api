@@ -1,4 +1,7 @@
-const persons = require('../person.json');
+let persons = require('../person.json');
+const { v4: uuidv4 } = require('uuid')
+
+const { writeDataToFile } = require('../utils')
 
 function findAll() {
     return new Promise((resolve, reject) => {
@@ -13,7 +16,36 @@ function findById(id) {
     });
 }
 
+function create(product) {
+    return new Promise((resolve, reject) => {
+        const newProduct = {id: uuidv4(), ...product};
+        persons.push(newProduct);
+        writeDataToFile('./person.json', persons);
+        resolve(newProduct);
+    });
+}
+
+function update(product, id) {
+    return new Promise((resolve, reject) => {
+        const index = persons.findIndex(p => p.id === id);
+        persons[index] = {id, ...product};
+        writeDataToFile('./person.json', persons);
+        resolve(persons[index]);
+    });
+}
+
+function remove(id) {
+    return new Promise((resolve, reject) => {
+        persons = persons.filter((p) => p.id !== id);
+        writeDataToFile('./person.json', persons);
+        resolve();
+    });
+}
+
 module.exports = {
     findAll,
-    findById
-}
+    findById,
+    create,
+    update,
+    remove
+};
